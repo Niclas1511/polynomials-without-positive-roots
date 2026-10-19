@@ -1,0 +1,415 @@
+% Kompilieren: latexmk -pdf noposroots.tex
+% Alternativ: pdflatex noposroots; biber noposroots; pdflatex noposroots; pdflatex noposroots
+% Literatur: biblatex mit Biber. Nur zitierte Eintraege werden ausgegeben.
+
+\documentclass[a4paper,11pt]{article}
+
+% --- Schrift und Seitenlayout ---
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Skalierbare Schrift, nahe an der AMS-Standardschrift.
+\usepackage[english]{babel} % Fuer deutsche Notizen: english durch ngerman ersetzen.
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+
+% --- Schlichtes Notizlayout ---
+\pagestyle{plain} % Nur Seitenzahlen; keine laufenden Kopfzeilen.
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em plus 0.1em minus 0.1em}
+
+
+% --- Literatur mit biblatex und Biber ---
+\usepackage{csquotes}
+\usepackage[
+backend=biber,
+style=numeric-comp,
+sorting=nyt,
+maxbibnames=99
+]{biblatex}
+\addbibresource{literature.bib}
+\renewcommand*{\bibfont}{\small}
+
+
+% --- Mathematik und Listen ---
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{enumitem}
+\newlist{compactitem}{itemize}{3}
+\setlist[compactitem]{topsep=2pt,partopsep=0pt,itemsep=0pt,parsep=0pt}
+\setlist[compactitem,1]{label=\textbullet}
+\setlist[compactitem,2]{label=--}
+\setlist[compactitem,3]{label=*}
+
+% Bei Bedarf aktivieren:
+% \usepackage{graphicx}               % Bilder mit \includegraphics
+% \usepackage{tikz-cd}                % Kommutative Diagramme
+% % \usepackage[notref,notcite]{showkeys} % Fuer die Fehlersuche aktivieren. Labelnamen am Rand
+% \usepackage{newpxtext,newpxmath}     % Palatino-Schrift wie in notes2
+
+% --- Links und Querverweise ---
+\usepackage{xcolor}
+\definecolor{darkred}{RGB}{160,0,0}
+\definecolor{darkblue}{RGB}{0,0,160}
+\definecolor{lightpurple}{RGB}{140,50,150}
+\usepackage[colorlinks=true,linkcolor=darkblue,citecolor=lightpurple,
+urlcolor=darkblue]{hyperref}
+\usepackage[sort,nameinlink]{cleveref}
+\usepackage{thmtools}
+
+% \usepackage{extarrows} % Bei Bedarf fuer zusaetzliche lange Pfeile.
+
+% --- Satzumgebungen ---
+% Gemeinsame fortlaufende Nummerierung: Theorem 1, Lemma 2, Example 3, ...
+% Aufrechte Schrift wie in sbei-no-ai; fuer kursive Saetze style=plain setzen.
+% thmtools erhaelt bei \cref und \Cref die richtigen Umgebungsnamen.
+\declaretheorem[style=definition,name=Theorem]{theorem}
+\declaretheorem[style=definition,name=Lemma,sibling=theorem]{lemma}
+\declaretheorem[style=definition,name=Proposition,sibling=theorem]{proposition}
+\declaretheorem[style=definition,name=Corollary,sibling=theorem]{corollary}
+\declaretheorem[style=definition,name=Definition,sibling=theorem]{definition}
+\declaretheorem[style=definition,name=Example,sibling=theorem]{example}
+\declaretheorem[style=definition,name=Remark,sibling=theorem]{remark}
+\declaretheorem[style=definition,name=Conjecture,sibling=theorem]{conjecture}
+\declaretheorem[style=definition,name=Question,sibling=theorem]{question}
+\declaretheorem[style=definition,name=Notation,sibling=theorem]{notation}
+\declaretheorem[style=definition,name=Claim,sibling=theorem]{claim}
+\declaretheorem[style=definition,name=Note,sibling=theorem]{note}
+\declaretheorem[style=definition,name=Convention,sibling=theorem]{convention}
+% Gleichungen werden ebenfalls fortlaufend nummeriert: (1), (2), ...
+% Fuer deutsche Notizen ausserdem hier name=... anpassen (z.B. name=Satz).
+
+% --- Haeufige Befehle ---
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\fr}[1]{\mathfrak{#1}}
+\newcommand{\mideal}{\mathfrak{m}}
+\newcommand{\nideal}{\mathfrak{n}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\card}[1]{\lvert#1\rvert}
+\newcommand{\Set}[1]{\left\{\,#1\,\right\}}
+\newcommand{\defas}{\coloneqq}
+\newcommand{\asdef}{\eqqcolon}
+\newcommand{\isoto}{\xrightarrow{\sim}}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\rank}{rk}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\tor}{Tor}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\reg}{reg}
+\DeclareMathOperator{\pd}{pd}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\height}{height}
+\DeclareMathOperator{\ch}{char}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\rad}{rad}
+\DeclareMathOperator{\initial}{in}
+\DeclareMathOperator{\hilb}{Hilb}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\zd}{ZD}
+
+% Offene Stellen: \todo{Hier fehlt noch ein Argument.}
+\newcommand{\todo}[1]{{\sffamily\color{darkred}\textbf{TODO:} #1}}
+
+% \usepackage[notref,notcite]{showkeys} % Fuer die Fehlersuche aktivieren.
+
+% --- Titel ---
+\title{No positive roots} % Hier das Thema einsetzen.
+\author{Niclas Niederdrenk}
+\date{October 15, 2026} % Festes Datum; fuer das aktuelle Datum: \date{\today}.
+
+% Kompakter, linksbuendiger Titel mit Autor und Datum.
+\makeatletter
+%\renewcommand{\maketitle}{%
+%	\begingroup
+%	\setlength{\parskip}{0pt}%
+%	{\LARGE\bfseries \@title\par}%
+%	\vspace{0.45em}%
+%	{\small\color{black!65}\@author\enspace\textperiodcentered\enspace\@date\par}%
+%	\endgroup
+%	\vspace{1.1em}%
+%}
+\makeatother
+
+\begin{document}
+	\maketitle
+	% \tableofcontents % Bei laengeren Notizen aktivieren.
+	
+	% Ab hier eigener Inhalt. Das kurze Beispiel zeigt die wichtigsten Befehle.
+	
+	
+	The following theorem appears as Exercise~3(a) in Chapter~3 of \cite{Stanley2018}, which covers random walks. I solved the exercise while reading the book in August 2025, though it took me quite a while. These notes present my argument, with the aim of using it as a test case for AI-assisted formalization and verification in Lean.
+	
+	\begin{theorem}\label{main-theorem}
+		Let $p \in \RR[x]$ be a nonzero polynomial. The following conditions
+		are equivalent:
+		\begin{enumerate}
+			\item There exists a nonzero polynomial $q \in \RR[x]$ such that
+			all coefficients of $pq$ are nonnegative.
+			\item The polynomial $p$ has no positive real root, i.e.,
+			$p(\alpha) \neq 0$ for every $\alpha > 0$.
+		\end{enumerate}
+	\end{theorem}
+	
+	The implication "$\Rightarrow$" is immediate: a nonzero polynomial with
+	nonnegative coefficients has no positive real root, and any root of $p$
+	is also a root of $pq$. It therefore remains to prove the implication
+	"$\Leftarrow$".
+	
+	If $p$ is constant, we may simply take $q=1/p$. Otherwise, we can write
+	$
+	p=c p_1 \cdots p_n,
+	$
+	where $c\in\RR\setminus\{0\}$ and each $p_i$ is a monic irreducible
+	polynomial of degree one or two. If $p$ has no positive real root, then
+	neither does any of its irreducible factors.
+	
+	The product of polynomials with nonnegative coefficients again has
+	nonnegative coefficients. Thus, if for each $i$ we can find a nonzero
+	polynomial $q_i$ such that $p_iq_i$ has nonnegative coefficients, then
+	$
+	q=c^{-1}q_1 \cdots q_n
+	$
+	satisfies
+	$
+	pq=p_1q_1 \cdots p_nq_n,
+	$
+	which has nonnegative coefficients. It therefore suffices to prove the
+	claim for monic irreducible polynomials of degree one or two.
+	
+	The linear case is immediate. Let $p=x+a$. Its unique root is $-a$,
+	so $p$ has no positive real root if and only if $a\geq0$.
+	Thus, all coefficients of $p$ are already nonnegative, and we may
+	take $q=1$.
+	
+	For the quadratic case, consider a monic irreducible polynomial
+	$p=x^2+bx+a\in\RR[x]$. Since $p$ is irreducible over $\RR$, its
+	discriminant satisfies
+	$
+	\Delta=b^2-4a<0.
+	$
+	In particular, $0\leq b^2<4a$, so $a>0$. If $b\geq0$, then $p$
+	already has nonnegative coefficients, and we may take $q=1$.
+	It therefore remains to prove the following lemma.
+	
+	\begin{lemma}\label{quadratic-case}
+		Let $p=x^2+bx+a\in\RR[x]$ satisfy $a>0$, $b<0$, and
+		$b^2-4a<0$. Then there exists a nonzero polynomial
+		$q\in\RR[x]$ such that all coefficients of $pq$ are nonnegative.
+	\end{lemma}
+	
+	We define a real sequence $(y_k)_{k\geq0}$ by setting $y_0=0$ and
+	requiring the formal power series identity
+	\[
+	\frac{a}{x^2+bx+a}
+	= \sum_{k=1}^{\infty} y_k x^{k-1}.
+	\]
+	Since $a\neq0$, this uniquely determines the sequence.
+	Comparing coefficients, we obtain the linear recurrence
+	\[
+	y_0=0,\qquad
+	y_1=1,\qquad
+	y_{k+2}=-\frac ba\,y_{k+1}-\frac1a\,y_k
+	\quad(k\geq0).
+	\]
+	
+	For each $n\geq1$, define the polynomial
+	$$
+	q_n(x)=\sum_{k=1}^{n}y_kx^{k-1}.
+	$$
+	
+	\begin{lemma}\label{pq-product}
+		For every $n\geq1$, we have
+		$
+		(a+bx+x^2)q_n(x)
+		=a-ay_{n+1}x^n+y_nx^{n+1}.
+		$
+	\end{lemma}
+	
+	\begin{proof}
+		We argue by induction on $n$. For $n=1$, we have $q_1=1$,
+		$y_1=1$, and $y_2=-b/a$. Hence
+		\[
+		(a+bx+x^2)q_1(x)
+		=a+bx+x^2
+		=a-ay_2x+y_1x^2.
+		\]
+		
+		Now suppose that the identity holds for some $n\geq1$.
+		Since
+		\[
+		q_{n+1}(x)=q_n(x)+y_{n+1}x^n,
+		\]
+		the induction hypothesis gives
+		\begin{align*}
+			(a+bx+x^2)q_{n+1}(x)
+			&=a-ay_{n+1}x^n+y_nx^{n+1}
+			+(a+bx+x^2)y_{n+1}x^n\\
+			&=a+(y_n+by_{n+1})x^{n+1}
+			+y_{n+1}x^{n+2}.
+		\end{align*}
+		The recurrence relation implies
+		\[
+		y_n+by_{n+1}=-ay_{n+2}.
+		\]
+		Consequently,
+		\[
+		(a+bx+x^2)q_{n+1}(x)
+		=a-ay_{n+2}x^{n+1}+y_{n+1}x^{n+2},
+		\]
+		which completes the induction.
+	\end{proof}
+	
+	To prove \Cref{quadratic-case}, it therefore suffices to show that
+	$y_k\leq0$ for some $k\geq1$. Indeed, choose $n$ such that $y_{n+1}$
+	is the first nonpositive term after $y_0$. Since $y_1=1$, we have
+	$n\geq1$ and $y_n>0$. The identity above then shows that all
+	coefficients of $pq_n$ are nonnegative. Moreover, $q_n\neq0$,
+	since its constant coefficient is $y_1=1$.
+	
+	It remains to establish the following lemma.
+	
+	\begin{lemma}\label{nonpositive-member}
+		There exists an integer $k\geq1$ such that $y_k\leq0$.
+	\end{lemma}
+	
+	
+	\begin{proof}
+		The characteristic polynomial of the recurrence is
+		\[
+		\chi(t)=t^2+\frac ba\,t+\frac1a.
+		\]
+		Its discriminant satisfies
+		\[
+		\Delta'=\frac{b^2-4a}{a^2}<0,
+		\]
+		so its roots are distinct and complex conjugates:
+		\[
+		\lambda_{1,2}
+		=\frac{-b\pm i\sqrt{4a-b^2}}{2a}.
+		\]
+		Since $a>0$ and $b<0$, we have
+		\[
+		\operatorname{Re}(\lambda_1)=\frac{-b}{2a}>0,
+		\qquad
+		\operatorname{Im}(\lambda_1)
+		=\frac{\sqrt{4a-b^2}}{2a}>0.
+		\]
+		Therefore, we may write
+		\[
+		\lambda_1=re^{i\phi},
+		\qquad
+		\lambda_2=re^{-i\phi}
+		\]
+		for some $r>0$ and $0<\phi<\pi/2$.
+		
+		The general solution of the recurrence has the form
+		\[
+		y_k=c\lambda_1^k+d\lambda_2^k
+		\qquad(k\geq0)
+		\]
+		for some $c,d\in\CC$. The initial conditions $y_0=0$ and $y_1=1$
+		give
+		\[
+		c+d=0,\qquad c\lambda_1+d\lambda_2=1.
+		\]
+		Consequently, $d=-c$ and
+		\[
+		c=\frac{1}{\lambda_1-\lambda_2}
+		=\frac{1}{2i\,\operatorname{Im}(\lambda_1)}.
+		\]
+		Using Euler's formula, we obtain
+		\[
+		y_k
+		=\frac{\lambda_1^k-\lambda_2^k}
+		{2i\,\operatorname{Im}(\lambda_1)}
+		=\frac{r^k}{\operatorname{Im}(\lambda_1)}
+		\sin(k\phi).
+		\]
+		By \Cref{sin-lemma}, there exists an integer $k\geq1$ such that
+		$\sin(k\phi)\leq0$. Since $r>0$ and
+		$\operatorname{Im}(\lambda_1)>0$, it follows that $y_k\leq0$.
+	\end{proof}
+	
+	\begin{lemma}\label{sin-lemma}
+		For every $\phi\in\RR$, there exists an integer $k\geq1$ such that
+		$\sin(k\phi)\leq0$.
+	\end{lemma}
+	
+	\begin{proof}
+		If $\sin\phi\leq0$, take $k=1$. Otherwise, by periodicity, we may
+		replace $\phi$ by its representative $\theta\in(0,\pi)$ modulo
+		$2\pi$. Set
+		$
+		k=\left\lceil\frac{\pi}{\theta}\right\rceil.
+		$
+		Then
+		$
+		\pi\leq k\theta<\pi+\theta<2\pi,
+		$
+		so $\sin(k\phi)=\sin(k\theta)\leq0$.
+	\end{proof}
+	
+	
+	\begin{example}
+		Consider the polynomial
+		$
+		p(x)=x^2-\frac{19}{10}x+5.
+		$
+		Its discriminant is
+		\[
+		\Delta=\left(\frac{19}{10}\right)^2-20
+		=-\frac{1639}{100}<0.
+		\]
+		The associated sequence is given by
+		\[
+		y_0=0,\qquad y_1=1,\qquad
+		y_{k+2}=\frac{19}{50}y_{k+1}-\frac15y_k
+		\quad(k\geq0).
+		\]
+		In particular,
+		\[
+		y_2=\frac{19}{50},
+		\qquad
+		y_3=\left(\frac{19}{50}\right)^2-\frac15
+		=-\frac{139}{2500}.
+		\]
+		Thus, $y_3$ is the first nonpositive term after $y_0$.
+		We therefore take
+		\[
+		q(x)=q_2(x)=1+\frac{19}{50}x.
+		\]
+		We have
+		\[
+		p(x)q(x)
+		=5-5y_3x^2+y_2x^3
+		=5+\frac{139}{500}x^2+\frac{19}{50}x^3,
+		\]
+		which has nonnegative coefficients.
+	\end{example}
+	
+		
+\begin{remark}[Historical note]
+	Essentially the same construction appears in Meissner's 1911 paper,
+	where it is attributed to Hurwitz's 1904 seminar; see
+	\cite[Introduction and Footnote~2]{WaymentSteele2023}.
+	For the interpretation via truncated reciprocal power series,
+	see \cite[Section~3]{KepkaKorbelar2012}.
+
+	In \cite{Polya1928}, Pólya proves the statement and extends it
+	to the multivariate case. In particular, he shows that
+	$\pm (1+x)^N p(x)$ has nonnegative coefficients for all sufficiently
+	large $N$. Explicit bounds on $N$ were later obtained, for example,
+	in \cite{Powers2001}.
+\end{remark}
+	
+	\printbibliography
+	
+\end{document}

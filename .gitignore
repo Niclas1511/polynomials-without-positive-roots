@@ -1,0 +1,21 @@
+# Literatur-PDFs nur lokal behalten
+/literature/
+
+# Temporäre LaTeX-Dateien
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Lokale Lean-Builds und heruntergeladene Abhängigkeiten
+.lake/
+
+
+# Lean-Abhängigkeiten und Build-Dateien auf jeder Ordnerebene
+**/.lake/
+
+# cache and other artifacts produced by Lean's Lake build tool
+.lake/
