@@ -9,6 +9,10 @@
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+*.bbl
+*.bcf
+*.blg
+*.run.xml
 
 # Lokale Lean-Builds und heruntergeladene Abhängigkeiten
 .lake/
